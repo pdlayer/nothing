@@ -1,6 +1,6 @@
 # Nothing Browser
 
-A minimalist web browser for Linux, built with Rust, GTK 4, and WebKitGTK. It started as a vibe coding experiment and is still an early prototype.
+A minimalist web browser for Linux, built with Rust, GTK 4, and WebKitGTK. This project is vibe-coded with AI assistance.
 
 - A retractable bottom toolbar and draggable tabs with site icons
 - Built-in ad blocking with EasyList, per-site exceptions, and an element picker
