@@ -1,13 +1,13 @@
 # Nothing Browser
 
-A minimalist web browser for Linux, built with Rust, GTK 4, and WebKitGTK.
+A minimalist web browser for Linux, built with Rust, GTK 4, and WebKitGTK. It started as a vibe coding experiment and is still an early prototype.
 
 - A retractable bottom toolbar and draggable tabs with site icons
 - Built-in ad blocking with EasyList, per-site exceptions, and an element picker
 - Support for a subset of Chrome Manifest V3 extensions, with installation from the Chrome Web Store or a local CRX package
 - Configurable default search engine and startup page
 
-Nothing is an early prototype. Extension compatibility varies, and some Chrome APIs are still missing.
+Extension compatibility varies, and some Chrome APIs are still missing.
 
 ## Build and run
 
