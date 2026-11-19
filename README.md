@@ -1,68 +1,54 @@
 # Nothing Browser
 
-Минималистичный браузер для Linux на Rust, GTK 4 и WebKitGTK 6.0. Пустая вкладка содержит только виджеты GTK. Первый переход создаёт WebView, а закрытие вкладки освобождает её WebView.
+A minimalist web browser for Linux, built with Rust, GTK 4, and WebKitGTK.
 
-## Запуск
+- A retractable bottom toolbar and draggable tabs with site icons
+- Built-in ad blocking with EasyList, per-site exceptions, and an element picker
+- Support for a subset of Chrome Manifest V3 extensions, with installation from the Chrome Web Store or a local CRX package
+- Configurable default search engine and startup page
 
-Нужны Rust/Cargo, pkg-config, GTK 4.10 или новее, WebKitGTK с модулем pkg-config `webkitgtk-6.0` и заголовки GStreamer 1.0. Системное размытие доступно в Wayland с GTK 4.24 и композитором с поддержкой `ext-background-effect-v1`.
+Nothing is an early prototype. Extension compatibility varies, and some Chrome APIs are still missing.
+
+## Build and run
+
+Install a current stable Rust toolchain, `pkg-config`, and the development packages for GTK 4 (4.10 or later), WebKitGTK 6.0, and GStreamer 1.0. On a Wayland compositor that supports the background effect protocol, GTK 4.24 or later enables system blur.
 
 ```sh
+git clone https://github.com/pdlayer/nothing.git
+cd nothing
 cargo run --locked
-cargo run --locked -- --extension ~/Downloads/nightshift.crx https://example.org
 ```
 
-Параметр `--extension` можно повторить. Указывайте его при каждом запуске. Меню пазла в нижней панели открывает popup расширений. Настройки сохраняются в `$XDG_DATA_HOME/nothing-browser` (по умолчанию `~/.local/share/nothing-browser`) и привязаны к SHA-256 пакета. Загрузчик читает контейнеры CRX2 и CRX3 без проверки подписи издателя. Используйте локальные пакеты, которым доверяете.
+Open Settings with **Ctrl+,** or the gear in the bottom toolbar. Use **Ctrl+L** to focus the address field, **Ctrl+T** to open a tab, and **Ctrl+W** to close it.
 
-Для постоянной установки публичного расширения откройте его карточку в Chrome Web Store, нажмите «Добавить в Nothing» и подтвердите установку. Установленные расширения доступны в меню пазла. Место хранения пакетов — `$XDG_DATA_HOME/nothing-browser/store-extensions`.
+## Extensions
 
-Для загрузки только на текущий сеанс передайте ссылку на карточку при запуске:
+Open a public Chrome Web Store listing in Nothing, select **Add to Nothing**, and confirm the installation. The store flow requires `curl`. The puzzle menu in the toolbar opens extension popups.
+
+To load a local extension for the current session:
 
 ```sh
-cargo run --locked -- --web-store 'https://chromewebstore.google.com/detail/ИМЯ/ID'
+cargo run --locked -- --extension /path/to/extension.crx
 ```
 
-Для скачивания нужен `curl`. Пакет запрашивается у Google по HTTPS при каждом таком запуске и загружается на текущий сеанс. Подпись CRX3 отдельно не проверяется. Поддерживаются HTTP(S)-шаблоны `matches` и `exclude_matches`, `all_frames` и `chrome.runtime.getURL()` внутри popup. Совместимость зависит от API, которые использует расширение.
+Store downloads use HTTPS. CRX signatures are currently unverified, so install packages from publishers you trust.
 
-В адресной строке можно ввести URL, домен или поисковый запрос. Поисковик и страницу запуска можно изменить через шестерёнку в нижней панели или клавишами Ctrl и запятая. Ctrl+L выделяет адрес, Ctrl+T открывает вкладку, Ctrl+W закрывает её, Alt+← и Alt+→ перемещают по истории, Ctrl+R обновляет страницу.
+## Ad blocking
 
-## Совместимость расширений
-
-Реализовано подмножество Manifest V3. Декларативные JS- и CSS-скрипты поддерживают HTTP(S)-шаблоны `matches`, `exclude_matches` и `all_frames`. Скрипты каждого расширения выполняются в отдельном JS-мире. Обрабатываются `document_start` и `document_end`. Для `document_idle` используется конец документа. Popup получает снимок вкладок при открытии. Поддержаны чтение локальных настроек, запись из popup, доставка изменений в открытые страницы и сообщения из popup во вкладку.
-
-В графической сессии протестированы оригинальные content scripts и popup двух расширений. Для каждого тест открывает локальную HTTP-страницу, проверяет CSS-класс тёмной темы, нажимает переключатель в popup и проверяет отключение темы в открытой вкладке.
-
-| Пакет | Проверенная ревизия | Ограничения |
-| --- | --- | --- |
-| [NightShift](https://github.com/st0ked622/nightshift/tree/aff6d68) | aff6d68 | Проверен основной переключатель. |
-| [Smart Dark Mode](https://github.com/Phumix/Smart-Dark-Mode/tree/5ff7450) | 5ff7450 | Проверен основной переключатель. Переход в настройки Chrome из popup не поддерживается. |
-
-Фоновые скрипты Manifest V3 выполняются в service worker WebKit. По событию Nothing открывает скрытый WebView с локальным мостом к нативному API. Поддерживаются классические и модульные фоновые скрипты. Для регистрации контекстных меню фон также запускается при открытии окна. После 30 секунд простоя контекст освобождается и при следующем событии создаётся заново. Данные в `chrome.storage.local` сохраняются между запусками. Popup и скрипты страниц могут вызвать `chrome.runtime.sendMessage()`, получить ответ и сохранить данные через `chrome.storage.local`. Этот режим реализует обмен сообщениями и хранилище. Фоновый скрипт с разрешением `offscreen` может открыть, проверить и закрыть один скрытый HTML-документ из пакета. Документ и фоновый скрипт обмениваются сообщениями через `chrome.runtime.sendMessage()`. Для двусторонних каналов внутри расширения доступны `runtime.connect`, `runtime.onConnect` и события порта `onMessage` и `onDisconnect`. Расширения с разрешением `contextMenus` могут добавлять пункты в контекстное меню и обрабатывать нажатия в фоне. Список пунктов формируется заново через `runtime.onInstalled` при первом запуске фонового контекста за сеанс браузера. Скрытый документ закрывается через `offscreen.closeDocument()`. При пробуждении воркер получает новый локальный origin. Данные `chrome.storage.local` сохраняются, а IndexedDB и Cache Storage воркера привязаны к этому временно́му origin. `scripting.executeScript({target: {allFrames: true}})` пока не поддерживается.
-
-## Блокировка рекламы
-
-Обычные вкладки используют встроенный фильтр WebKit до первой загрузки страницы. По умолчанию включены EasyList и десять базовых правил. Щит в нижней панели открывает настройки поверх текущей вкладки. **Hide an element** запускает пипетку для основного документа: наведите курсор и нажмите на подсвеченный элемент. Escape отменяет выбор. Селектор сохраняется для текущего хоста. Для отмены сохранённых правил сайта нажмите **Restore hidden elements**, затем **Apply changes**. Можно выключить защиту глобально или для текущего хоста, отключить EasyList, добавить или удалить локальный список. Кнопка **Apply changes** сохраняет настройки. Изменения сетевых фильтров перезагружают активную страницу. Восстановление скрытых элементов применяется сразу. Копии импортированных списков хранятся в профиле. Для обновления импортируйте файл с тем же именем. Снимок EasyList входит в сборку и работает офлайн. Дополнительные списки можно передать и при запуске.
+The shield in the bottom toolbar controls blocking on the current site, custom filter lists, and element hiding. EasyList comes bundled with the browser. You can also load a local list at launch:
 
 ```sh
-cargo run --locked -- --filter-list ~/Downloads/easylist.txt
-cargo run --locked -- --no-adblock
+cargo run --locked -- --filter-list /path/to/filters.txt
 ```
 
-Параметр `--filter-list` можно повторять. Все списки объединяются при запуске, поэтому исключения могут отменять правила из другого файла. При изменении файла перезапустите приложение. WebKit хранит скомпилированные правила в `$XDG_CACHE_HOME/nothing-browser/content-filters`. Подписок и автоматического обновления пока нет.
+The filter engine supports a subset of ABP and uBlock Origin syntax. Scriptlets and procedural cosmetic filters are currently unsupported.
 
-Конвертер adblock-rust поддерживает часть синтаксиса ABP/uBO, включая доменные и URL-фильтры, исключения `@@`, фильтрацию скриптов и простое скрытие элементов по CSS-селектору `##`. Скриптлеты `##+js(...)`, процедурные селекторы и другие правила, для которых у конвертера нет эквивалента WebKit, пропускаются.
-
-## Проверка
+## Development
 
 ```sh
+cargo fmt --check
 cargo test --locked
-XDG_DATA_HOME="$(mktemp -d)" NB_TEST_CRX=/path/to/nightshift.crx cargo test original_popup -- --ignored
-cargo test memory_workload -- --ignored --nocapture
+cargo clippy --locked --all-targets -- -D warnings
 ```
 
-Последний тест запускает GTK и выводит PID и этап замера. В одном прогоне на Linux с WebKitGTK 2.54.2 сумма PSS тестового процесса и его потомков через три секунды после каждого действия составила 82 МиБ для пустой вкладки, 764 МиБ для пяти коротких HTML-документов и 288 МиБ после закрытия четырёх вкладок. Измерение выполнено по `/proc/<pid>/smaps_rollup` в debug-сборке, без расширений. Сложные сайты и длительные сеансы требуют отдельных измерений.
-
-Вкладки можно перетаскивать. Адресная строка, прогресс загрузки и меню расширений находятся в нижней панели.
-
-Для Web Audio нужен элемент GStreamer `autoaudiosink` (в Arch Linux он входит в `gst-plugins-good`). Браузер проверяет его при первом создании WebView и отключает Web Audio при отсутствии плагина. После установки пакета перезапустите приложение.
-
-Для замера интервалов между кадрами при прокрутке локальной тестовой страницы в видимом окне выполните `cargo test scroll_frame_timing -- --ignored --nocapture`.
+Asset and filter attributions are listed in [Material Symbols](assets/material/NOTICE) and [EasyList](assets/filters/NOTICE).
