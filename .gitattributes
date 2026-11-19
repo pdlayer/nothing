@@ -1,0 +1,20 @@
+* text=auto eol=lf
+
+*.rs text diff=rust
+*.toml text
+Cargo.lock text
+*.js text
+*.css text
+*.md text
+*.svg text
+*.txt text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.webp binary
+*.crx binary
+
+# Preserve upstream whitespace in the vendored filter list.
+assets/filters/easylist.txt whitespace=-blank-at-eol

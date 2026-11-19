@@ -1,0 +1,50 @@
+window.compositor-glass {
+  /* The undecorated Wayland surface has no outer resize or shadow gutter. */
+  box-shadow: none;
+  border: none;
+  background: rgba(22, 22, 24, .44);
+  backdrop-filter: blur(18px);
+}
+window.compositor-glass notebook.browser-tabs,
+window.compositor-glass notebook.browser-tabs > stack,
+window.compositor-glass .start-page { background: transparent; }
+window.compositor-glass .browser-tabs > header,
+window.compositor-glass headerbar.page-navigation {
+  background: rgba(23, 23, 24, .12);
+  box-shadow: none;
+}
+window.compositor-glass .page-navigation entry {
+  background: rgba(30, 30, 32, .42);
+}
+window.compositor-glass entry.start-search { background: rgba(241, 239, 233, .76); }
+window.compositor-glass entry.start-search:focus-within { background: rgba(245, 243, 237, .80); }
+window.compositor-glass .browser-tabs > header .window-controls button,
+window.compositor-glass .browser-tabs > header button.new-tab { background-image: none; }
+window.compositor-glass .browser-tabs > header .window-controls button:hover,
+window.compositor-glass .browser-tabs > header button.new-tab:hover {
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, rgba(180,180,180,.17), transparent);
+}
+window.compositor-glass .browser-tabs > header button.close-window:hover {
+  background-image: linear-gradient(to bottom, rgba(188,70,61,.78), transparent);
+}
+
+window.compositor-glass .preferences-tab,
+window.compositor-glass .preferences-tab scrolledwindow,
+window.compositor-glass .preferences-tab viewport {
+  background: transparent;
+}
+
+
+/* Request compositor blur on the native popup, which has its own Wayland surface. */
+window.compositor-glass popover.protection-panel {
+  background: rgba(22, 22, 24, .44);
+  backdrop-filter: blur(18px);
+  border-radius: 12px;
+}
+
+window.compositor-glass popover.protection-panel > contents {
+  background: transparent;
+  border-color: rgba(185, 182, 175, .22);
+  box-shadow: none;
+}

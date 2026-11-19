@@ -1,0 +1,24 @@
+# Rust build output
+/target/
+
+# Local environment and browser data
+.env
+.env.*
+!.env.example
+/.cargo/config
+/.cargo/config.toml
+/profile/
+/profiles/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.crx
+
+# Editor and operating system files
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+.DS_Store

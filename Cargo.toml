@@ -1,0 +1,20 @@
+[package]
+name = "nothing-browser"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gtk = { package = "gtk4", version = "0.11", features = ["v4_10"] }
+webkit6 = "0.6"
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+zip = { version = "4", default-features = false, features = ["deflate"] }
+url = "2"
+tempfile = "3"
+gstreamer = "0.25"
+libc = "0.2"
+adblock = { version = "0.13.6", default-features = false, features = ["content-blocking", "embedded-domain-resolver"] }
+
+[profile.dev]
+debug = 0

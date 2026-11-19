@@ -1,0 +1,11 @@
+! Nothing Browser starter rules
+||doubleclick.net^$third-party
+||googlesyndication.com^$third-party
+||googleadservices.com^$third-party
+||adnxs.com^$third-party
+||adsrvr.org^$third-party
+||amazon-adsystem.com^$third-party
+||rubiconproject.com^$third-party
+||pubmatic.com^$third-party
+||openx.net^$third-party
+||criteo.com^$third-party

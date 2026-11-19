@@ -1,0 +1,251 @@
+window.nothing-window {
+  background: #1a1b1e;
+  color: #e4e5e7;
+  border-radius: 9px;
+}
+window.nothing-window.maximized, window.nothing-window.fullscreen { border-radius: 0; }
+headerbar.navigation {
+  min-height: 40px;
+  padding: 0 6px;
+  background: #191919;
+  color: #e4e5e7;
+  border: 0;
+  border-bottom: 0;
+  box-shadow: none;
+}
+.navigation button, .browser-tabs tab button {
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+.navigation button:hover, .browser-tabs tab button:hover { background: #383a40; }
+.navigation entry {
+  min-height: 28px;
+  margin: 4px 8px;
+  padding: 0 12px;
+  background: #252525;
+  color: #ededee;
+  caret-color: #ededee;
+  border: 1px solid #343434;
+  border-radius: 10px;
+  box-shadow: none;
+}
+.navigation entry:focus-within { outline: none; border-color: #858991; }
+.navigation entry selection { background: #505d73; color: white; }
+notebook.browser-tabs { border: none; background: #1a1b1e; color: #e4e5e7; }
+.browser-tabs > header { padding: 0; min-height: 28px; border: none; background: #191919; }
+.browser-tabs > header tab {
+  color: #a9a7a2;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 0 4px 0 8px;
+  margin: 0 2px;
+  font-size: 12px;
+  min-height: 26px;
+  box-shadow: none;
+}
+.browser-tabs > header tab:hover { color: #efefeb; }
+.browser-tabs > header tab:checked,
+.browser-tabs > header .active-tab { color: #efefeb; }
+.browser-tabs > header .active-tab { box-shadow: inset 0 -2px #b9b6af; }
+.nothing-window .browser-tabs > header tab:focus,
+.nothing-window notebook.browser-tabs:focus-visible > header tab:checked { outline: none; }
+.nothing-window.tab-keyboard notebook.browser-tabs:focus-visible > header tab:checked,
+.nothing-window.tab-keyboard .browser-tabs > header tab:focus-visible {
+  outline: 1px solid #b9b6af;
+  outline-offset: -2px;
+}
+.browser-tabs > header tab button { min-width: 22px; min-height: 22px; border-radius: 5px; }
+.navigation button:focus-visible { outline: 1px solid #85878b; outline-offset: -2px; }
+
+.start-page {
+  background-color: #191919;
+
+}
+entry.start-search {
+  min-height: 58px;
+  padding: 0 18px;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  border: 0;
+  border-radius: 13px;
+  background: #e7e5df;
+  color: #20201f;
+  caret-color: #b43629;
+  box-shadow: none;
+  outline: none;
+}
+entry.start-search:focus-within { background: #f0eee8; outline: none; }
+entry.start-search text placeholder { color: #66645f; }
+entry.start-search image.left { margin-right: 12px; -gtk-icon-size: 22px; }
+entry.start-search image.right { margin-left: 12px; -gtk-icon-size: 18px; }
+entry.start-search selection { color: #161615; background: #c7c3ba; }
+.navigation popover contents {
+  color: #eceae5;
+  background: #272726;
+  border: 1px solid #444340;
+  border-radius: 12px;
+  padding: 6px;
+}
+.navigation popover button { padding: 3px 12px; }
+
+
+.window-bar { min-height: 34px; }
+.window-bar button { min-width: 28px; min-height: 28px; }
+.navigation button, .browser-tabs > header tab {
+  transition: background-color 140ms ease-out, color 100ms ease-out;
+}
+.window-bar button.close-window:hover { background-color: #a83833; }
+@keyframes start-appear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+entry.start-search { animation: start-appear 170ms ease-out; }
+.browser-tabs > header button {
+  min-width: 25px; min-height: 24px; padding: 0;
+  background: transparent; border: 0; box-shadow: none;
+  border-radius: 5px; transition: background-color 140ms ease-out;
+}
+.browser-tabs > header button:hover { background-color: #383a40; }
+.browser-tabs > header button.close-window:hover { background-color: #a83833; }
+.navigation-edge { padding: 6px 0 0; }
+.navigation-grip {
+  min-height: 3px; border-radius: 0;
+  background: #636365; box-shadow: none;
+}
+popover.protection-panel > contents {
+  background: #191919;
+  color: #efefeb;
+  border: 1px solid #393938;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 8px 24px alpha(black, .32);
+}
+.blocker-settings { color: #efefeb; font-size: 13px; }
+.blocker-settings .panel-title { font-size: 20px; font-weight: 500; }
+.blocker-settings .site-name { color: #a9a7a2; font-size: 12px; }
+.blocker-settings separator { background: #333332; }
+.blocker-settings button {
+  min-height: 30px;
+  padding: 0 12px;
+  background: transparent;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #efefeb;
+  box-shadow: none;
+  text-shadow: none;
+}
+.blocker-settings button:hover { background: #30302e; }
+.blocker-settings button:disabled { color: #75736f; }
+.blocker-settings .blocker-site-choice {
+  padding: 3px;
+  border: 1px solid #333332;
+  border-radius: 9px;
+  background: #202020;
+}
+.blocker-settings .blocker-site-choice button { color: #a9a7a2; }
+.blocker-settings .blocker-site-choice button:checked { background: #383836; color: #efefeb; }
+.blocker-settings button.blocker-toggle { min-width: 36px; background: #242424; color: #a9a7a2; }
+.blocker-settings button.blocker-toggle:checked { background: #383836; color: #efefeb; }
+.blocker-settings button.blocker-tool { background: #242424; }
+.blocker-settings button.blocker-tool:hover { background: #30302e; }
+.blocker-settings .blocker-lists > title { padding: 4px 0; color: #c7c4bd; }
+.blocker-settings .blocker-status { color: #c7c4bd; }
+.blocker-settings button.blocker-apply { background: #efede6; color: #191919; min-height: 34px; }
+.blocker-settings button.blocker-apply:hover { background: #fffdf5; color: #191919; }
+
+.browser-tabs > header button.new-tab,
+.browser-tabs > header .window-controls button {
+  min-width: 28px;
+  min-height: 28px;
+  margin: 0;
+  border-radius: 5px;
+}
+
+/* Feather the hover fill into the toolbar while keeping the glyph sharp. */
+.browser-tabs > header button.new-tab,
+.browser-tabs > header .window-controls button,
+.window-bar .window-controls button {
+  background-image: linear-gradient(to bottom, transparent 12%, alpha(#191919, .18) 38%, alpha(#191919, .70) 72%, #191919 100%);
+}
+.browser-tabs > header button.new-tab:hover,
+.browser-tabs > header .window-controls button:hover,
+.window-bar .window-controls button:hover { background-color: #303134; }
+.browser-tabs > header .window-controls button.close-window:hover,
+.window-bar .window-controls button.close-window:hover { background-color: #823933; }
+
+.browser-tabs > header .window-controls button.maximize-window:hover,
+.window-bar .window-controls button.maximize-window:hover {
+  background-color: #33465e;
+  background-image: linear-gradient(to bottom, transparent 12%, alpha(#33465e, .55) 38%, alpha(#33465e, .85) 72%, #33465e 100%);
+}
+
+.nothing-window button:focus-visible,
+popover.protection-panel button:focus-visible,
+popover.protection-panel expander > title:focus-visible,
+.navigation popover button:focus-visible {
+  outline: 1px solid #b9b6af;
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.preferences-tab { background: #191919; color: #efefeb; }
+.browser-preferences { min-width: 400px; font-size: 13px; }
+.preferences-title { font-size: 30px; font-weight: 500; }
+.browser-preferences separator { color: #333332; background: #333332; }
+.preferences-engines {
+  padding: 3px;
+  border: 1px solid #333332;
+  border-radius: 9px;
+  background: #202020;
+}
+.browser-preferences .preferences-engines button,
+.browser-preferences .preferences-save,
+.browser-preferences .preferences-address {
+  background: transparent;
+  background-image: none;
+  color: #efefeb;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  box-shadow: none;
+  text-shadow: none;
+  outline: none;
+  min-height: 30px;
+  padding: 0 12px;
+}
+.browser-preferences .preferences-engines button { color: #a9a7a2; }
+.browser-preferences .preferences-engines button:hover { color: #efefeb; }
+.browser-preferences .preferences-engines button:checked { background: transparent; color: #efefeb; }
+.browser-preferences .preferences-address {
+  min-height: 36px;
+  background: #242424;
+  border-color: #393938;
+}
+.browser-preferences .preferences-address selection { background: #d7d2c7; color: #191919; }
+.browser-preferences .preferences-save { background: #efede6; color: #191919; min-height: 34px; }
+.browser-preferences .preferences-save:hover { background: #fffdf5; color: #191919; }
+.browser-preferences .preferences-address:focus-within,
+.browser-preferences.preferences-keyboard .preferences-engines button:focus-visible,
+.browser-preferences .preferences-save:focus-visible { border-color: #a7a299; }
+.browser-preferences .dim-label { color: #a9a7a2; }
+
+.browser-preferences .preferences-save:disabled { background: #292929; color: #83817e; border-color: transparent; }
+.browser-preferences .preferences-error { color: #efa5a0; }
+
+
+.page-navigation menubutton > button,
+.page-navigation > box > button {
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
+  margin: 0;
+}
